@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>photography — alexa</title>
+    <style>
+        :root {
+            --cream: #FDFBF7;
+            --charcoal: #2A2A2A;
+            --accent: #E63946;
+            --light-gray: #E8E4DF;
+            --mid-gray: #A39B93;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Cursor */
+        body {
+            cursor: none;
+        }
+        
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        
+        #cursor.expand {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            mix-blend-mode: color-burn;
+        }
+        
+        #cursor.modal-active {
+            background: white;
+            mix-blend-mode: normal;
+        }
+        
+        a, button, .gallery-item {
+            cursor: none;
+        }
+        
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: color 0.3s ease;
+        }
+        
+        nav.modal-open,
+        nav.modal-open .logo,
+        nav.modal-open .nav-links a {
+            color: white;
+        }
+        
+        .logo {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--charcoal);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Page Container */
+        .page-container {
+            padding: 12rem 4rem 6rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            margin-bottom: 6rem;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(4rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            text-transform: lowercase;
+        }
+        
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--mid-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* Gallery Grid - Masonry Style */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            background: var(--light-gray);
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item.tall {
+            aspect-ratio: 2/3;
+        }
+        
+        .gallery-item.wide {
+            aspect-ratio: 3/2;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-item::before {
+            content: attr(data-placeholder);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            color: var(--mid-gray);
+            text-align: center;
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-item-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            text-transform: lowercase;
+        }
+        
+        .gallery-item-category {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+        
+        .gallery-item-view {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+        }
+        
+        /* Project Modal */
+        .project-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+        }
+        
+        .project-modal.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            color: white;
+            background: none;
+            border: none;
+            cursor: none;
+            z-index: 10001;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+        
+        .modal-content {
+            max-width: 1200px;
+            margin: 8rem auto 4rem;
+            padding: 0 4rem 4rem;
+            color: white;
+        }
+        
+        .modal-header {
+            margin-bottom: 4rem;
+        }
+        
+        .modal-category {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .modal-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            text-transform: lowercase;
+        }
+        
+        .modal-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #E8E4DF;
+            max-width: 900px;
+            margin-bottom: 3rem;
+        }
+        
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 4rem;
+        }
+        
+        .modal-detail-item h4 {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-detail-item p {
+            font-size: 1rem;
+            color: #E8E4DF;
+        }
+        
+        .modal-images {
+            display: grid;
+            gap: 3rem;
+        }
+        
+        .modal-image {
+            width: 100%;
+            min-height: 600px;
+            background: var(--light-gray);
+            position: relative;
+        }
+        
+        .modal-image::before {
+            content: attr(data-placeholder);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: var(--mid-gray);
+        }
+        
+        footer {
+            background: var(--cream);
+            color: var(--mid-gray);
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .page-container {
+                padding: 10rem 2rem 4rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 6rem auto 2rem;
+                padding: 0 2rem 2rem;
+            }
+            
+            .modal-close {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">alexa</a>
+        <ul class="nav-links">
+            <li><a href="design.html">design</a></li>
+            <li><a href="photography.html" class="active">photography</a></li>
+            <li><a href="about.html">about</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="page-container">
+        <div class="page-header">
+            <h1 class="page-title">photography</h1>
+            <p class="page-description">from editorial spreads to intimate portraits, each photograph tells its own unique story through light, composition, and emotion.</p>
+        </div>
+        
+        <div class="gallery-grid">
+            <!-- Photo Series 1 -->
+            <div class="gallery-item tall" data-placeholder="PHOTO 1" onclick="openModal('photo1')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">portrait series</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+            
+            <!-- Photo Series 2 -->
+            <div class="gallery-item" data-placeholder="PHOTO 2" onclick="openModal('photo2')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">editorial</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+            
+            <!-- Photo Series 3 -->
+            <div class="gallery-item wide" data-placeholder="PHOTO 3" onclick="openModal('photo3')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">architecture</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+            
+            <!-- Photo Series 4 -->
+            <div class="gallery-item" data-placeholder="PHOTO 4" onclick="openModal('photo4')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">nature study</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+            
+            <!-- Photo Series 5 -->
+            <div class="gallery-item tall" data-placeholder="PHOTO 5" onclick="openModal('photo5')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">street photography</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+            
+            <!-- Photo Series 6 -->
+            <div class="gallery-item" style="background-image: url('Alexa_Still_Life4049-2.jpg'); background-size: cover; background-position: center;" onclick="openModal('photo6')">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-title">opus won</h3>
+                    <p class="gallery-item-category">photography</p>
+                    <p class="gallery-item-view">view series →</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Photo Modals -->
+    <div id="photo1" class="project-modal">
+        <button class="modal-close" onclick="closeModal('photo1')">×</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-category">photography / portrait</p>
+                <h2 class="modal-title">portrait series</h2>
+                <p class="modal-description">intimate portrait collection exploring identity and human connection through natural light and minimal styling. each image captures a moment of vulnerability and authenticity, revealing the unique character of each subject.</p>
+                
+                <div class="modal-details-grid">
+                    <div class="modal-detail-item">
+                        <h4>subjects</h4>
+                        <p>15 portraits</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>year</h4>
+                        <p>2024</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>camera</h4>
+                        <p>canon 5d mark iv</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>location</h4>
+                        <p>various studios</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-images">
+                <div class="modal-image" data-placeholder="PORTRAIT IMAGE 1"></div>
+                <div class="modal-image" data-placeholder="PORTRAIT IMAGE 2"></div>
+                <div class="modal-image" data-placeholder="PORTRAIT IMAGE 3"></div>
+                <div class="modal-image" data-placeholder="PORTRAIT IMAGE 4"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="photo2" class="project-modal">
+        <button class="modal-close" onclick="closeModal('photo2')">×</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-category">photography / editorial</p>
+                <h2 class="modal-title">editorial</h2>
+                <p class="modal-description">editorial photography series for fashion and lifestyle publications. focusing on storytelling through composition, styling, and carefully crafted visual narratives that blend artistry with commercial appeal.</p>
+                
+                <div class="modal-details-grid">
+                    <div class="modal-detail-item">
+                        <h4>publication</h4>
+                        <p>[magazine name]</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>year</h4>
+                        <p>2024</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>images</h4>
+                        <p>20 image spread</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>styling</h4>
+                        <p>[stylist name]</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-images">
+                <div class="modal-image" data-placeholder="EDITORIAL IMAGE 1"></div>
+                <div class="modal-image" data-placeholder="EDITORIAL IMAGE 2"></div>
+                <div class="modal-image" data-placeholder="EDITORIAL IMAGE 3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add similar modals for photo3, photo4, photo5, photo6 -->
+    
+    <div id="photo6" class="project-modal">
+        <button class="modal-close" onclick="closeModal('photo6')">×</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-category">photography / conceptual</p>
+                <h2 class="modal-title">opus won</h2>
+                <p class="modal-description">a conceptual portrait exploring the relationship between music, creativity, and personal expression. floating instruments and sheet music create a dreamlike atmosphere around the subject.</p>
+                
+                <div class="modal-details-grid">
+                    <div class="modal-detail-item">
+                        <h4>concept</h4>
+                        <p>conceptual portrait</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>year</h4>
+                        <p>2024</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>technique</h4>
+                        <p>studio composite</p>
+                    </div>
+                    <div class="modal-detail-item">
+                        <h4>location</h4>
+                        <p>studio</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-images">
+                <div class="modal-image" style="background-image: url('Alexa_Still_Life4049-2.jpg'); background-size: cover; background-position: center; min-height: 700px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 alexa. all rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Expand cursor on hover
+        document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+        });
+        
+        // Modal Functions
+        const nav = document.querySelector('nav');
+        const cursor = document.getElementById('cursor');
+        
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            nav.classList.add('modal-open');
+            cursor.classList.add('modal-active');
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            nav.classList.remove('modal-open');
+            cursor.classList.remove('modal-active');
+        }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.project-modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+                nav.classList.remove('modal-open');
+                cursor.classList.remove('modal-active');
+            }
+        });
+    </script>
+</body>
+</html>

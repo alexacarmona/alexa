@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about — alexa</title>
+    <style>
+        :root {
+            --cream: #FDFBF7;
+            --charcoal: #2A2A2A;
+            --accent: #E63946;
+            --light-gray: #E8E4DF;
+            --mid-gray: #A39B93;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Cursor */
+        body {
+            cursor: none;
+        }
+        
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        
+        #cursor.expand {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            mix-blend-mode: color-burn;
+        }
+        
+        a, button {
+            cursor: none;
+        }
+        
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            animation: slideDown 0.8s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .logo {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--charcoal);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Main Content */
+        .page-container {
+            padding: 12rem 4rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            margin-bottom: 6rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .page-title {
+            font-size: clamp(4rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            text-transform: lowercase;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--mid-gray);
+            letter-spacing: 0.05em;
+        }
+        
+        /* About Content */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+        
+        .about-image {
+            width: 100%;
+            height: 600px;
+            background: var(--light-gray);
+            position: relative;
+        }
+        
+        .about-image::before {
+            content: 'YOUR PHOTO';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: var(--mid-gray);
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: lowercase;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+        }
+        
+        /* Services/Skills Section */
+        .services-section {
+            padding: 6rem 0;
+            border-top: 1px solid var(--light-gray);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+        
+        .service-item h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-transform: lowercase;
+        }
+        
+        .service-item p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--mid-gray);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--light-gray);
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+        
+        .contact-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: lowercase;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 600px;
+        }
+        
+        .contact-item h4 {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item a,
+        .contact-item p {
+            font-size: 1.1rem;
+            color: var(--charcoal);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+        
+        footer {
+            background: var(--cream);
+            color: var(--mid-gray);
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .page-container {
+                padding: 10rem 2rem 4rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .services-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">alexa</a>
+        <ul class="nav-links">
+            <li><a href="design.html">design</a></li>
+            <li><a href="photography.html">photography</a></li>
+            <li><a href="about.html" class="active">about</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="page-container">
+        <div class="page-header">
+            <h1 class="page-title">about</h1>
+            <p class="page-subtitle">visual designer & photographer based in [your location]</p>
+        </div>
+        
+        <div class="about-grid">
+            <div class="about-image" style="background-image: url('Aigprofile.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="about-text">
+                <h2>creating meaningful visual experiences through design and photography</h2>
+                <p>with a keen eye for composition and a passion for storytelling, i create work that bridges the gap between graphic design and photography. each project is an opportunity to explore new perspectives and push creative boundaries.</p>
+                <p>my approach combines technical precision with artistic intuition, resulting in visuals that are both elegant and impactful. i believe in the power of visual communication to connect, inspire, and transform.</p>
+                <p>over the years, i've had the privilege of working with diverse clients across fashion, lifestyle, editorial, and branding sectors. my work has been featured in [publications/platforms], and i continue to explore the intersection of art and commerce.</p>
+            </div>
+        </div>
+        
+        <!-- Services Section -->
+        <div class="services-section">
+            <h2 class="page-title" style="font-size: 3rem; margin-bottom: 1rem;">what i do</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>brand identity</h3>
+                    <p>comprehensive visual identity systems including logo design, color palettes, typography, and brand guidelines that create lasting impressions.</p>
+                </div>
+                <div class="service-item">
+                    <h3>editorial design</h3>
+                    <p>magazine layouts, publication design, and typographic compositions that balance aesthetic appeal with readability.</p>
+                </div>
+                <div class="service-item">
+                    <h3>photography</h3>
+                    <p>portrait, editorial, and commercial photography with attention to lighting, composition, and storytelling through imagery.</p>
+                </div>
+                <div class="service-item">
+                    <h3>digital design</h3>
+                    <p>web design, social media content, and digital campaigns that engage audiences across platforms.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Section -->
+        <div id="contact" class="contact-section">
+            <h2>get in touch</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h4>email</h4>
+                    <a href="mailto:alexaxcarmona@gmail.com">alexaxcarmona@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <h4>instagram</h4>
+                    <a href="https://www.instagram.com/alexacarmonaa/" target="_blank">@alexacarmonaa</a>
+                </div>
+                <div class="contact-item">
+                    <h4>linkedin</h4>
+                    <a href="https://www.linkedin.com/in/alexa-carmona-4555a8241" target="_blank">alexa carmona</a>
+                </div>
+                <div class="contact-item">
+                    <h4>portfolio</h4>
+                    <a href="https://alexaphotography.myportfolio.com" target="_blank">alexaphotography.myportfolio.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 alexa. all rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Expand cursor on hover
+        document.querySelectorAll('a').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+        });
+    </script>
+</body>
+</html>
