@@ -33,27 +33,28 @@
         }
         
         #cursor {
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             background: var(--accent);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
-            mix-blend-mode: difference;
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
         }
         
         #cursor.expand {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            mix-blend-mode: color-burn;
+            width: 50px;
+            height: 50px;
+            background: rgba(230, 57, 70, 0.8);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.8);
         }
         
         #cursor.modal-active {
             background: white;
             mix-blend-mode: normal;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
         
         a, button, .gallery-item {
@@ -563,7 +564,6 @@
         
         // Modal Functions
         const nav = document.querySelector('nav');
-        const cursor = document.getElementById('cursor');
         
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
