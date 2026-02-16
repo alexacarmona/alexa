@@ -3,883 +3,752 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alexa — visual designer & photographer</title>
-
+    <title>alexa carmona</title>
     <style>
-        :root {
-            --cream: #FDFBF7;
-            --charcoal: #2A2A2A;
-            --accent: #E63946;
-            --light-gray: #E8E4DF;
-            --mid-gray: #A39B93;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--cream);
-            color: var(--charcoal);
-            line-height: 1.6;
-            overflow-x: hidden;
+            background: #f5f5f5;
+            color: #000;
+            font-size: 16px;
         }
-        
-        /* Custom Cursor */
-        body {
-            cursor: none;
-        }
-        
-        #cursor {
-            width: 16px;
-            height: 16px;
-            background: var(--accent);
-            border-radius: 50%;
+
+        /* Header */
+        header {
             position: fixed;
-            pointer-events: none;
-            z-index: 10001;
-            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
-            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
-        }
-        
-        #cursor.expand {
-            width: 50px;
-            height: 50px;
-            background: rgba(230, 57, 70, 0.8);
-            box-shadow: 0 0 20px rgba(230, 57, 70, 0.8);
-        }
-        
-        #cursor.modal-active {
-            background: white;
-            mix-blend-mode: normal;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-        }
-        
-        a, button {
-            cursor: none;
-        }
-        
-        /* Navigation */
-        nav {
-            position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            padding: 2rem 4rem;
+            background: #f5f5f5;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            animation: slideDown 0.8s ease;
+            align-items: baseline;
+            z-index: 100;
         }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .logo {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            color: var(--charcoal);
-            text-decoration: none;
-        }
-        
-        .nav-links {
+
+        .header-left {
             display: flex;
-            gap: 3rem;
-            list-style: none;
+            gap: 40px;
+            align-items: baseline;
         }
-        
-        .nav-links a {
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            color: var(--charcoal);
+
+        .header-left a,
+        .header-right a {
+            color: #000;
             text-decoration: none;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.4s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            opacity: 0.4;
-            object-fit: cover;
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(253, 251, 247, 0.6), rgba(253, 251, 247, 0.8));
-            z-index: 1;
-        }
-        
-        .hero-content {
-            text-align: center;
-            z-index: 2;
-        }
-        
-        .hero h1 {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: clamp(4rem, 10vw, 8rem);
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
-            text-transform: lowercase;
-        }
-        
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-size: 16px;
             font-weight: 300;
-            letter-spacing: 0.15em;
-            color: var(--mid-gray);
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
+            cursor: pointer;
         }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .header-left a:hover,
+        .header-right a:hover {
+            opacity: 0.5;
         }
-        
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            color: var(--mid-gray);
-            opacity: 0;
-            animation: fadeIn 1s ease 1.2s forwards, float 2s ease-in-out infinite;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-        
-        /* Horizontal Scrolling Carousel */
-        .carousel-section {
-            padding: 8rem 0;
-            overflow: hidden;
-            background: var(--cream);
-        }
-        
-        .carousel-container {
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        .carousel-track {
-            display: flex;
-            gap: 2rem;
-            will-change: transform;
-            transition: transform 0.1s linear;
-        }
-        
-        .carousel-item {
-            flex: 0 0 400px;
-            height: 500px;
-            background: var(--light-gray);
-            border-radius: 2px;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .carousel-item:hover {
-            transform: scale(1.02);
-        }
-        
-        .carousel-item::before {
-            content: attr(data-placeholder);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            color: var(--mid-gray);
-        }
-        
-        .carousel-label {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            font-size: 1.2rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            color: white;
-            text-transform: lowercase;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 0.8rem 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-        
-        /* Project Modal */
-        .project-modal {
+
+        /* Project List Sidebar */
+        .project-list-sidebar {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
+            right: 40px;
+            bottom: 40px;
+            z-index: 50;
             display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            overflow-y: auto;
         }
-        
-        .project-modal.active {
+
+        .project-list-sidebar.show {
             display: block;
-            opacity: 1;
         }
-        
-        .modal-close {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            font-size: 2rem;
-            color: white;
-            background: none;
-            border: none;
-            cursor: none;
-            z-index: 10001;
-            transition: transform 0.3s ease;
-        }
-        
-        .modal-close:hover {
-            transform: rotate(90deg);
-        }
-        
-        .modal-content {
-            max-width: 1200px;
-            margin: 6rem auto;
-            padding: 0 4rem 4rem;
-            color: white;
-        }
-        
-        .modal-header {
-            margin-bottom: 3rem;
-        }
-        
-        .modal-category {
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        
-        .modal-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-            text-transform: lowercase;
-        }
-        
-        .modal-description {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #E8E4DF;
-            max-width: 800px;
-        }
-        
-        .modal-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .modal-image {
-            width: 100%;
-            aspect-ratio: 4/5;
-            background: var(--light-gray);
-            position: relative;
-        }
-        
-        .modal-image::before {
-            content: attr(data-placeholder);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            color: var(--mid-gray);
-        }
-        
-        .modal-details {
-            margin-top: 3rem;
-            padding-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .modal-details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-        
-        .modal-detail-item h4 {
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-        
-        .modal-detail-item p {
-            font-size: 1rem;
-            color: #E8E4DF;
-        }
-        
-        /* Section Styling */
-        section {
-            padding: 5rem 4rem;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-        
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-number {
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        
-        .section-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 200;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-        }
-        
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--mid-gray);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-        
-        /* About Section */
-        .about {
-            background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 100%);
-        }
-        
-        .about-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-        }
-        
-        .about-text h3 {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 2rem;
+
+        .project-list-sidebar a {
+            display: block;
+            font-size: 14px;
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 8px;
             font-weight: 300;
-            margin-bottom: 2rem;
-            line-height: 1.4;
+            transition: all 0.3s;
+            text-transform: uppercase;
         }
-        
-        .about-text p {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
+
+        .project-list-sidebar a.active {
+            color: #000;
         }
-        
-        .about-image {
-            height: 500px;
-            background: var(--light-gray);
-            border-radius: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .about-image::before {
-            content: 'YOUR PHOTO';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            color: var(--mid-gray);
-        }
-        
-        /* Contact Info Inline */
-        .contact-info {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .contact-info h4 {
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-        
-        .contact-links-inline {
+
+        /* Scroll View */
+        .scroll-view {
+            padding: 100px 40px 80px;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            align-items: center;
         }
-        
-        .contact-link-inline {
-            font-size: 1.05rem;
-            color: var(--charcoal);
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            position: relative;
-            width: fit-content;
-            transition: color 0.3s ease;
+
+        .works-label {
+            font-size: 64px;
+            font-weight: 700;
+            position: fixed;
+            left: 40px;
+            bottom: 40px;
+            z-index: 10;
+            text-transform: uppercase;
         }
-        
-        .contact-link-inline::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.4s ease;
-        }
-        
-        .contact-link-inline:hover {
-            color: var(--accent);
-        }
-        
-        .contact-link-inline:hover::after {
+
+        .scroll-item {
+            margin-bottom: 60px;
+            cursor: pointer;
+            max-width: 500px;
             width: 100%;
         }
-        
-        /* Gallery Grid */
-        .gallery-grid {
-            max-width: 1400px;
+
+        .scroll-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* About Section */
+        .about-section {
+            display: none;
+            padding: 100px 40px 80px;
+            max-width: 900px;
             margin: 0 auto;
+        }
+
+        .about-section.active {
+            display: block;
+        }
+
+        .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: start;
         }
-        
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 4/5;
-            background: var(--light-gray);
-            cursor: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+
+        .about-image img {
+            width: 100%;
+            height: auto;
         }
-        
-        .gallery-item.visible {
-            opacity: 1;
-            transform: translateY(0);
+
+        .about-text h2 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: -0.02em;
         }
-        
-        .gallery-item::before {
-            content: attr(data-placeholder);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.85rem;
-            letter-spacing: 0.12em;
-            color: var(--mid-gray);
-            text-align: center;
-            white-space: pre-line;
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 300;
+            margin-bottom: 30px;
         }
-        
-        .gallery-item-overlay {
-            position: absolute;
-            bottom: 0;
+
+        .about-text a {
+            color: #000;
+            font-weight: 300;
+        }
+
+        /* Project Detail Modal */
+        .project-detail {
+            display: none;
+            position: fixed;
+            top: 0;
             left: 0;
             right: 0;
-            padding: 2rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
+            bottom: 0;
+            background: #f5f5f5;
+            z-index: 200;
+            overflow-y: auto;
+            padding: 100px 40px 80px;
         }
-        
-        .gallery-item:hover .gallery-item-overlay {
-            transform: translateY(0);
+
+        .project-detail.active {
+            display: block;
         }
-        
-        .gallery-item-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 1.5rem;
+
+        .project-detail-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr 600px;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .project-detail-info {
+            position: sticky;
+            top: 100px;
+        }
+
+        .project-detail-title {
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .project-detail-year {
+            font-size: 18px;
             font-weight: 300;
-            margin-bottom: 0.5rem;
+            color: #666;
+            margin-bottom: 40px;
         }
-        
-        .gallery-item-category {
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            opacity: 0.8;
+
+        .project-detail-description {
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 30px;
         }
-        
-        /* Stagger Animation for Gallery Items */
-        .gallery-item:nth-child(1) { transition-delay: 0.1s; }
-        .gallery-item:nth-child(2) { transition-delay: 0.2s; }
-        .gallery-item:nth-child(3) { transition-delay: 0.3s; }
-        .gallery-item:nth-child(4) { transition-delay: 0.4s; }
-        .gallery-item:nth-child(5) { transition-delay: 0.5s; }
-        .gallery-item:nth-child(6) { transition-delay: 0.6s; }
-        
+
+        .project-detail-meta {
+            font-size: 14px;
+            line-height: 1.8;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .project-detail-scroll {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .project-detail-scroll-item {
+            width: 100%;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        .project-detail-scroll-item.active {
+            opacity: 1;
+        }
+
+        .project-detail-scroll-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .project-detail-preview {
+            position: sticky;
+            top: 100px;
+        }
+
+        .project-detail-preview img {
+            width: 100%;
+            height: auto;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            background: none;
+            border: none;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 201;
+        }
+
+        .back-btn:hover {
+            opacity: 0.5;
+        }
+
+        /* Footer */
         footer {
-            background: var(--cream);
-            color: var(--mid-gray);
-            text-align: center;
-            padding: 3rem 2rem;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            border-top: 1px solid var(--light-gray);
+            padding: 40px;
+            border-top: 1px solid #ddd;
+            margin-top: 100px;
         }
-        
-        /* Responsive */
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-content a {
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
         @media (max-width: 768px) {
-            nav {
-                padding: 1.5rem 2rem;
+            header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
             }
-            
-            .nav-links {
-                gap: 1.5rem;
+
+            .header-left {
+                gap: 20px;
             }
-            
-            .nav-links a {
-                font-size: 0.8rem;
+
+            .works-label {
+                font-size: 36px;
+                position: static;
+                margin-bottom: 40px;
             }
-            
-            section {
-                padding: 5rem 2rem;
+
+            .project-list-sidebar {
+                display: none !important;
             }
-            
+
             .about-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 30px;
             }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .carousel-item {
-                flex: 0 0 280px;
-                height: 350px;
-            }
-            
-            .modal-content {
-                margin: 4rem auto;
-                padding: 0 2rem 2rem;
-            }
-            
-            .modal-close {
-                top: 1rem;
-                right: 1rem;
-            }
-            
-            .modal-images {
+
+            .project-detail-container {
                 grid-template-columns: 1fr;
             }
+
+            .project-detail-preview {
+                position: static;
+            }
+
+            .project-detail-title {
+                font-size: 32px;
+            }
+
+            .scroll-item {
+                max-width: 100%;
+            }
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div id="cursor"></div>
-    
-    <!-- Navigation -->
-    <nav>
-        <a href="index.html" class="logo">alexa</a>
-        <ul class="nav-links">
-            <li><a href="design.html">design</a></li>
-            <li><a href="photography.html">photography</a></li>
-            <li><a href="about.html">about</a></li>
-        </ul>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <!-- Background Video -->
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="your-video.mp4" type="video/mp4">
-            <!-- Fallback for browsers that don't support video -->
-        </video>
-        <div class="hero-overlay"></div>
-        
-        <div class="hero-content">
-            <h1>alexa</h1>
-            <p class="hero-subtitle">visual designer & photographer</p>
+    <header>
+        <div class="header-left">
+            <a href="#" onclick="showHome()">alexa</a>
+            <a href="#" onclick="filterPhotography()">photography</a>
         </div>
-        <div class="scroll-indicator">scroll</div>
-    </section>
-    
-    <!-- Horizontal Scrolling Carousel -->
-    <section class="carousel-section">
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <div class="carousel-item" style="background-image: url('Alexa_Still_Life4049-2.jpg'); background-size: cover; background-position: center;">
-                    <div class="carousel-label">opus won</div>
-                </div>
-                <div class="carousel-item" data-placeholder="POSTER 2"></div>
-                <div class="carousel-item" data-placeholder="POSTER 3"></div>
-                <div class="carousel-item" data-placeholder="POSTER 4"></div>
-                <div class="carousel-item" data-placeholder="POSTER 5"></div>
-                <div class="carousel-item" data-placeholder="POSTER 6"></div>
-            </div>
+        <div class="header-right">
+            <a href="#" onclick="showAbout()">about</a>
         </div>
-    </section>
-    
-    <!-- Graphic Design Preview Section -->
-    <section id="design" style="padding: 5rem 4rem;">
-        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
-            <div style="font-size: 0.9rem; font-weight: 500; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem;">02 — graphic design</div>
-            <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 200; letter-spacing: 0.05em; margin-bottom: 1.5rem; text-transform: lowercase;">visual identity & design</h2>
-            <p style="font-size: 1.1rem; color: var(--mid-gray); max-width: 600px; margin: 0 auto; line-height: 1.8;">brand identities, editorial layouts, and digital experiences crafted with intention and aesthetic precision.</p>
+    </header>
+
+    <div class="project-list-sidebar" id="projectListSidebar"></div>
+
+    <main>
+        <div class="scroll-view" id="scrollView">
+            <div id="scrollContainer"></div>
         </div>
-        <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background: var(--light-gray); cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--mid-gray); text-align: center;">PROJECT IMAGE 1</div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">brand identity</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">design</p>
+        <div class="works-label" id="worksLabel">works</div>
+
+        <div class="about-section" id="aboutSection">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/alexa_headshot-9.JPG" alt="alexa carmona">
                 </div>
-            </div>
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background: var(--light-gray); cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--mid-gray); text-align: center;">PROJECT IMAGE 2</div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">editorial layout</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">design</p>
-                </div>
-            </div>
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background: var(--light-gray); cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--mid-gray); text-align: center;">PROJECT IMAGE 3</div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">packaging design</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">design</p>
+                <div class="about-text">
+                    <h2>about</h2>
+                    <p>as a graphic design bfa and photography student at scad, i use design and image-making as tools for exploration. i experiment boldly, collaborate intentionally, and embrace creative risk. my work is fueled by movement, curiosity, and the constant pursuit of expanding what's visually possible.</p>
+                    <p>
+                        <a href="mailto:alexaxcarmona@gmail.com">alexaxcarmona@gmail.com</a><br>
+                        <a href="https://instagram.com/alexacarmonaa" target="_blank">instagram</a><br>
+                        <a href="https://linkedin.com/in/alexacarmona" target="_blank">linkedin</a>
+                    </p>
                 </div>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="design.html" style="font-size: 1rem; letter-spacing: 0.08em; color: var(--charcoal); text-decoration: none; padding: 1rem 2rem; border: 1px solid var(--charcoal); transition: all 0.3s ease; display: inline-block; cursor: none;" onmouseover="this.style.background='var(--charcoal)'; this.style.color='var(--cream)'" onmouseout="this.style.background='transparent'; this.style.color='var(--charcoal)'">view all design →</a>
+
+        <div class="project-detail" id="projectDetail">
+            <button class="back-btn" onclick="closeProject()">← back</button>
+            <div class="project-detail-container" id="projectDetailContainer"></div>
         </div>
-    </section>
-    
-    <!-- Photography Preview Section -->
-    <section id="photography" style="padding: 5rem 4rem;">
-        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
-            <div style="font-size: 0.9rem; font-weight: 500; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem;">03 — photography</div>
-            <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 200; letter-spacing: 0.05em; margin-bottom: 1.5rem; text-transform: lowercase;">captured moments</h2>
-            <p style="font-size: 1.1rem; color: var(--mid-gray); max-width: 600px; margin: 0 auto; line-height: 1.8;">from editorial spreads to intimate portraits, each photograph tells its own unique story.</p>
-        </div>
-        <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background: var(--light-gray); cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--mid-gray); text-align: center;">PHOTO 1</div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">portrait series</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">photography</p>
-                </div>
-            </div>
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background: var(--light-gray); cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--mid-gray); text-align: center;">PHOTO 2</div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">editorial</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">photography</p>
-                </div>
-            </div>
-            <div style="position: relative; overflow: hidden; aspect-ratio: 4/5; background-image: url('Alexa_Still_Life4049-2.jpg'); background-size: cover; background-position: center; cursor: none; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; transform: translateY(100%); transition: transform 0.4s ease;" onmouseenter="this.style.transform='translateY(0)'" onmouseleave="this.style.transform='translateY(100%)'">
-                    <h3 style="font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: lowercase;">opus won</h3>
-                    <p style="font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.8;">photography</p>
-                </div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="photography.html" style="font-size: 1rem; letter-spacing: 0.08em; color: var(--charcoal); text-decoration: none; padding: 1rem 2rem; border: 1px solid var(--charcoal); transition: all 0.3s ease; display: inline-block; cursor: none;" onmouseover="this.style.background='var(--charcoal)'; this.style.color='var(--cream)'" onmouseout="this.style.background='transparent'; this.style.color='var(--charcoal)'">view all photography →</a>
-        </div>
-    </section>
-    
-    <!-- Simple Get in Touch Link -->
-    <section style="padding: 8rem 4rem; text-align: center;">
-        <a href="about.html#contact" style="font-size: 2.5rem; font-weight: 700; letter-spacing: 0.02em; color: var(--charcoal); text-decoration: none; text-transform: lowercase; transition: color 0.3s ease; cursor: none;" onmouseover="this.style.color='#E63946'" onmouseout="this.style.color='var(--charcoal)'">get in touch →</a>
-    </section>
-    
+    </main>
+
     <footer>
-        <p>&copy; 2024 alexa. all rights reserved.</p>
+        <div class="footer-content">
+            <div>
+                <a href="mailto:alexaxcarmona@gmail.com">alexaxcarmona@gmail.com</a>
+            </div>
+            <div>
+                <a href="https://instagram.com/alexacarmonaa" target="_blank">instagram</a> / 
+                <a href="https://linkedin.com/in/alexacarmona" target="_blank">linkedin</a>
+            </div>
+        </div>
     </footer>
+
     <script>
-        // Custom Cursor
-        const cursor = document.getElementById('cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-        
-        // Expand cursor on hover
-        document.querySelectorAll('a, .gallery-item').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
-        });
-        
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-        
-        // Observe gallery items
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            observer.observe(item);
-        });
-        
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Horizontal Carousel Scroll Effect
-        const carouselTrack = document.querySelector('.carousel-track');
-        const carouselSection = document.querySelector('.carousel-section');
-        
-        if (carouselTrack && carouselSection) {
-            window.addEventListener('scroll', () => {
-                const rect = carouselSection.getBoundingClientRect();
-                const sectionTop = rect.top;
-                const sectionHeight = rect.height;
-                const windowHeight = window.innerHeight;
+        const projects = [
+            {
+                id: 1,
+                title: "breadly",
+                year: "2025",
+                categories: ["design", "photography"],
+                description: "Breadly blends craftsmanship, fashion, and attitude to build a community where culture rises right alongside good bread.",
+                details: "branding, packaging, art direction<br>collaborators: rose davis, bradley looney",
+                thumbnail: "images/DSC01941.jpg",
+                images: [
+                    "images/DSC01941.jpg",
+                    "images/DSC02361.jpg",
+                    "images/DSC02371__1_.jpg",
+                    "images/alexa_breadly1-44.jpg",
+                    "images/alexa_breadly1-50.jpg"
+                ]
+            },
+            {
+                id: 2,
+                title: "shirley zhang-hamlin",
+                year: "2026",
+                categories: ["photography"],
+                description: "Editorial portrait and spread design for Atlanta Hawks creative director profile.",
+                details: "editorial photography<br>publication: georgia entertainment magazine<br>designer: leo ruiz",
+                thumbnail: "images/alexa_shirley-21.jpg",
+                images: [
+                    "images/alexa_shirley-21.jpg",
+                    "images/alexa_shirley-30.jpg",
+                    "images/Screenshot_2026-02-15_at_5_09_06_PM.png",
+                    "images/spread3-2.jpg"
+                ]
+            },
+            {
+                id: 4,
+                title: "the secret life of walter mitty movie book",
+                year: "2025",
+                categories: ["design"],
+                description: "Typographic exploration through three scenes of transformation, courage, and self-discovery.",
+                details: "publication design, typography",
+                thumbnail: "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A5.jpg",
+                images: [
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A5.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A6.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A7.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A12.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A13.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A20.jpg",
+                    "images/ATL_202530_GRDS353_A2_Photography_CARMONA_A27.jpg"
+                ]
+            },
+            {
+                id: 5,
+                title: "trade-mark",
+                year: "2026",
+                categories: ["design"],
+                description: "Experiential pop-up celebrating Chicago's creative community through design, culture, and connection.",
+                details: "branding, experiential design<br>client: ftop (for the one percent)<br>collaborators: ahana, bella, kaki kwan",
+                thumbnail: "images/tent.jpg",
+                images: [
+                    "images/tent.jpg",
+                    "images/TRADEMARK_Artboard_1_copy_4__2_.jpg",
+                    "images/TRADEMARKPATCH_Artboard_10.png",
+                    "images/updated_posters_alexa-04__1_.png",
+                    "images/updated_posters_alexa-08__1_.png"
+                ]
+            },
+            {
+                id: 6,
+                title: "garbage magazine",
+                year: "2024",
+                categories: ["design", "photography"],
+                description: "Photography publication capturing the raw beauty and culture around Atlanta's MARTA transit system.",
+                details: "publication design, photography",
+                thumbnail: "images/_MG_0006.jpg",
+                images: [
+                    "images/_MG_0006.jpg",
+                    "images/_MG_0077.jpg",
+                    "images/IMG_5027_3.jpg",
+                    "images/alexa-atlBikes-8.jpg",
+                    "images/alexa-atlBikes-19.jpg",
+                    "images/alexa-atlBikes-24.jpg"
+                ]
+            },
+            {
+                id: 7,
+                title: "mariana robledo fashion collection",
+                year: "2025",
+                categories: ["photography"],
+                description: "Studio fashion photography showcasing avant-garde wearable art and sculptural silhouettes.",
+                details: "fashion photography<br>designer: mariana robledo",
+                thumbnail: "images/Alexa_Fash2025-58.jpg",
+                images: [
+                    "images/Alexa_Fash2025-91.jpg",
+                    "images/Alexa_Fash2025-40.jpg",
+                    "images/Alexa_Fash2025-58.jpg",
+                    "images/Alexa_Fash2025-67.jpg",
+                    "images/Alexa_Fash2025-123.jpg",
+                    "images/Alexa_Fash2025-128.jpg",
+                    "images/Alexa_Fash2025-135.jpg",
+                    "images/Alexa_Fash2025-136.jpg",
+                    "images/Alexa_Fash2025-155.jpg"
+                ]
+            },
+            {
+                id: 8,
+                title: "swiss design commemorative stamps",
+                year: "2024",
+                categories: ["design"],
+                description: "Stamp collection honoring the Swiss design movement and pioneers Ernst Keller, Max Huber, and Anton Stankowski.",
+                details: "branding, typography",
+                thumbnail: "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3904.jpg",
+                images: [
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3896.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3904.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3906.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3913.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3924.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3926.jpg",
+                    "images/376_BUSINESS_OF_GRAPHIC_DESIGN-3927.jpg"
+                ]
+            },
+            {
+                id: 9,
+                title: "gold: olympic women type specimen",
+                year: "2025",
+                categories: ["design"],
+                description: "Helvetica type specimen celebrating female Olympic gold medalists through bold typography and sports data visualization.",
+                details: "publication design, typography",
+                thumbnail: "images/ATL_202530_GRDS353_A1_Photography_8_CARMONA_A.jpg",
+                images: [
+                    "images/ATL_202530_GRDS353_A1_Photography_3_CARMONA_A.jpg",
+                    "images/ATL_202530_GRDS353_A1_Photography_4_CARMONA_A.jpg",
+                    "images/ATL_202530_GRDS353_A1_Photography_5_CARMONA_A.jpg",
+                    "images/ATL_202530_GRDS353_A1_Photography_6_CARMONA_A.jpg",
+                    "images/ATL_202530_GRDS353_A1_Photography_8_CARMONA_A.jpg"
+                ]
+            },
+            {
+                id: 10,
+                title: "red and blue chair miniature",
+                year: "2024",
+                categories: ["design"],
+                description: "Physical study of Gerrit Rietveld's iconic 1918 De Stijl chair through acrylic model and architectural documentation.",
+                details: "product design, research",
+                thumbnail: "images/angelina_digitals-6.jpg",
+                images: [
+                    "images/angelina_digitals-3.jpg",
+                    "images/angelina_digitals-5.jpg",
+                    "images/angelina_digitals-6.jpg",
+                    "images/angelina_digitals-7.jpg",
+                    "images/angelina_digitals-9.jpg",
+                    "images/angelina_digitals-10.jpg",
+                    "images/angelina_digitals.jpg"
+                ]
+            },
+            {
+                id: 11,
+                title: "kris lee studio portraits",
+                year: "2025",
+                categories: ["photography"],
+                description: "Editorial fashion photography exploring power dressing and contemporary tailoring with dramatic studio lighting.",
+                details: "fashion photography<br>model: kris lee",
+                thumbnail: "images/alexa-kris_112.jpg",
+                images: [
+                    "images/alexa-kris_112.jpg",
+                    "images/alexa-kris_156.jpg",
+                    "images/67ab7e48-2dfc-499f-a617-2eedac8ba19c_rw_3840.jpg",
+                    "images/bf48da75-d7a7-4f25-825f-2c7a2089341b_rw_3840.jpg",
+                    "images/d0bcaf70-8a8c-42dc-9ab8-1caca5d587a2_rw_3840.jpg"
+                ]
+            },
+            {
+                id: 12,
+                title: "got em' coffee brand",
+                year: "2025",
+                categories: ["design", "photography"],
+                description: "Branding and campaign photography for a collaborative coffee shop targeting creatives and coffee enthusiasts.",
+                details: "branding, photography",
+                thumbnail: "images/Screenshot_2026-02-15_at_5_54_08_PM.png",
+                images: [
+                    "images/Screenshot_2026-02-15_at_5_54_08_PM.png",
+                    "images/202530_ATL_GRDS_Quarzo_alexa_carmona_designdynamics__01.jpg"
+                ]
+            },
+            {
+                id: 13,
+                title: "art & athletics",
+                year: "2026",
+                categories: ["design"],
+                description: "Editorial design highlighting SCAD Athletics' championship facilities and student-athlete achievements.",
+                details: "editorial design<br>publication: georgia entertainment magazine",
+                thumbnail: "images/art_athletics_spreads2.jpg",
+                images: [
+                    "images/art_athletics_spreads2.jpg",
+                    "images/Screenshot_2026-02-15_at_5_57_20_PM.png"
+                ]
+            },
+            {
+                id: 14,
+                title: "jayden hibbert sports portraits",
+                year: "2025",
+                categories: ["photography"],
+                description: "Studio sports photography capturing athleticism and movement for Atlanta United goalkeeper.",
+                details: "sports photography<br>athlete: jayden hibbert, atlanta united",
+                thumbnail: "images/Alexa_jayden-11.jpg",
+                images: [
+                    "images/Alexa_jayden-11.jpg",
+                    "images/Alexa_jayden-14.jpg",
+                    "images/Alexa_jayden-15.jpg",
+                    "images/Alexa_jayden-26.jpg",
+                    "images/Alexa_jayden-31.jpg",
+                    "images/Alexa_jayden-40.jpg",
+                    "images/Alexa_jayden-45.jpg",
+                    "images/Alexa_jayden-46.jpg",
+                    "images/Alexa_jayden.jpg"
+                ]
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        function renderScrollView(filter = 'all') {
+            const container = document.getElementById('scrollContainer');
+            const sidebar = document.getElementById('projectListSidebar');
+            const worksLabel = document.getElementById('worksLabel');
+            container.innerHTML = '';
+            sidebar.innerHTML = '';
+            
+            if (filter === 'photography') {
+                worksLabel.style.display = 'none';
+            } else {
+                worksLabel.style.display = 'block';
+            }
+            
+            const filtered = filter === 'all' ? projects : projects.filter(p => p.categories.includes(filter));
+            
+            filtered.forEach(project => {
+                const item = document.createElement('div');
+                item.className = 'scroll-item';
+                item.id = `project-${project.id}`;
+                item.onclick = () => openProject(project.id);
+                item.innerHTML = `<img src="${project.thumbnail}" alt="${project.title}">`;
+                container.appendChild(item);
                 
-                // Calculate how far through the section we've scrolled
-                if (sectionTop < windowHeight && sectionTop + sectionHeight > 0) {
-                    // Normalize scroll progress (0 to 1)
-                    const scrollProgress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
-                    
-                    // Move carousel to the right as we scroll down - increased multiplier for longer scroll
-                    const maxScroll = carouselTrack.scrollWidth - window.innerWidth;
-                    const translateX = -(scrollProgress * maxScroll * 1.5); // Changed from 0.8 to 1.5 for more showcase
-                    
-                    carouselTrack.style.transform = `translateX(${translateX}px)`;
-                }
+                const link = document.createElement('a');
+                link.href = `#project-${project.id}`;
+                link.textContent = project.title;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    document.getElementById(`project-${project.id}`).scrollIntoView({ behavior: 'smooth' });
+                };
+                sidebar.appendChild(link);
             });
+            
+            setupScrollSpy();
         }
+
+        function filterPhotography() {
+            currentFilter = currentFilter === 'photography' ? 'all' : 'photography';
+            renderScrollView(currentFilter);
+        }
+
+        function showAbout() {
+            document.getElementById('scrollView').classList.add('hidden');
+            document.getElementById('aboutSection').classList.add('active');
+            document.getElementById('projectListSidebar').classList.remove('show');
+            document.getElementById('worksLabel').style.display = 'none';
+        }
+
+        function showHome() {
+            currentFilter = 'all';
+            document.getElementById('aboutSection').classList.remove('active');
+            document.getElementById('projectDetail').classList.remove('active');
+            document.getElementById('scrollView').classList.remove('hidden');
+            document.getElementById('projectListSidebar').classList.add('show');
+            renderScrollView('all');
+        }
+
+        function openProject(id) {
+            const project = projects.find(p => p.id === id);
+            const detail = document.getElementById('projectDetail');
+            const container = document.getElementById('projectDetailContainer');
+            
+            container.innerHTML = `
+                <div class="project-detail-info">
+                    <div class="project-detail-title">${project.title}</div>
+                    <div class="project-detail-year">${project.year}</div>
+                    <div class="project-detail-description">${project.description}</div>
+                    <div class="project-detail-meta">${project.details}</div>
+                </div>
+                <div class="project-detail-scroll" id="projectScroll">
+                    ${project.images.map((img, i) => `
+                        <div class="project-detail-scroll-item ${i === 0 ? 'active' : ''}" data-src="${img}">
+                            <img src="${img}" alt="${project.title}">
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="project-detail-preview">
+                    <img src="${project.images[0]}" id="previewImage" alt="${project.title}">
+                </div>
+            `;
+            
+            detail.classList.add('active');
+            document.getElementById('worksLabel').style.display = 'none';
+            document.getElementById('projectListSidebar').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            
+            setupProjectScroll();
+        }
+
+        function setupProjectScroll() {
+            const scrollItems = document.querySelectorAll('.project-detail-scroll-item');
+            const previewImage = document.getElementById('previewImage');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        scrollItems.forEach(item => item.classList.remove('active'));
+                        entry.target.classList.add('active');
+                        previewImage.src = entry.target.dataset.src;
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            scrollItems.forEach(item => observer.observe(item));
+        }
+
+        function closeProject() {
+            document.getElementById('projectDetail').classList.remove('active');
+            if (currentFilter !== 'photography') {
+                document.getElementById('worksLabel').style.display = 'block';
+            }
+            document.getElementById('projectListSidebar').classList.add('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function setupScrollSpy() {
+            const sidebar = document.getElementById('projectListSidebar');
+            const links = sidebar.querySelectorAll('a');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = '#' + entry.target.id;
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            document.querySelectorAll('.scroll-item').forEach(item => observer.observe(item));
+        }
+
+        // Initial render
+        renderScrollView();
+        document.getElementById('projectListSidebar').classList.add('show');
     </script>
 </body>
 </html>
