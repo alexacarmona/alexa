@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <base href="./">
+    <script>
+      (function() {
+        var path = location.pathname.replace(/\/[^/]*$/, '') || '/';
+        if (path !== '/') path += '/';
+        window.BASE_PATH = path === '/' ? '' : path;
+        document.querySelector('base').href = location.origin + path;
+      })();
+    </script>
     <title>alexa carmona</title>
     <style>
         * {
@@ -689,7 +698,7 @@
         <div class="about-section" id="aboutSection">
             <div class="about-content">
                 <div class="about-image">
-                    <img src="images/alexa_headshot-9.JPG" alt="alexa carmona">
+                    <img id="aboutHeadshot" src="images/alexa_headshot-9.JPG" alt="alexa carmona">
                 </div>
                 <div class="about-text">
                     <h2>about</h2>
@@ -722,6 +731,12 @@
     </footer>
 
     <script>
+        function assetUrl(path) {
+            if (!path) return '';
+            if (path.indexOf('http') === 0 || path.indexOf('//') === 0) return path;
+            var b = (typeof window !== 'undefined' && window.BASE_PATH) ? window.BASE_PATH : '';
+            return location.origin + b + (path.charAt(0) === '/' ? path.slice(1) : path);
+        }
         const projects = [
             {
                 id: 1,
@@ -1013,7 +1028,7 @@
                 item.className = 'scroll-item';
                 item.id = `project-${project.id}`;
                 item.onclick = () => openProject(project.id);
-                item.innerHTML = `<img src="${project.thumbnail}" alt="${project.title}">`;
+                item.innerHTML = `<img src="${assetUrl(project.thumbnail)}" alt="${project.title}">`;
                 container.appendChild(item);
                 
                 const link = document.createElement('a');
@@ -1064,7 +1079,7 @@
                     const cell = document.createElement('div');
                     cell.className = 'photography-grid-cell';
                     cell.onclick = () => openProject(project.id, true);
-                    cell.innerHTML = `<img src="${project.thumbnail}" alt="${project.title}">`;
+                    cell.innerHTML = `<img src="${assetUrl(project.thumbnail)}" alt="${project.title}">`;
                     grid.appendChild(cell);
                 });
                 wrap.appendChild(grid);
@@ -1108,7 +1123,7 @@
                 const rightBg = imgs[2] || imgs[1] || imgs[0];
                 container.innerHTML = `
                     <div class="focus-side-left">
-                        <div class="focus-side-bg" style="background-image:url('${leftBg}')"></div>
+                        <div class="focus-side-bg" style="background-image:url('${assetUrl(leftBg)}')"></div>
                         <div class="focus-side-overlay"></div>
                         <div class="focus-side-content">
                             <h1 class="focus-detail-title">${project.title}</h1>
@@ -1121,17 +1136,17 @@
                         </div>
                         <div class="focus-thumb-strip" id="focusThumbStrip">
                             ${imgs.map((img, i) => `
-                                <div class="focus-thumb ${i === 0 ? 'active' : ''}" data-src="${img}" data-idx="${i}">
-                                    <img src="${img}" alt="${project.title}">
+                                <div class="focus-thumb ${i === 0 ? 'active' : ''}" data-src="${assetUrl(img)}" data-idx="${i}">
+                                    <img src="${assetUrl(img)}" alt="${project.title}">
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                     <div class="focus-center">
-                        <img src="${imgs[0]}" id="previewImage" alt="${project.title}">
+                        <img src="${assetUrl(imgs[0])}" id="previewImage" alt="${project.title}">
                     </div>
                     <div class="focus-side-right">
-                        <div class="focus-side-bg" id="focusRightBg" style="background-image:url('${rightBg}')"></div>
+                        <div class="focus-side-bg" id="focusRightBg" style="background-image:url('${assetUrl(rightBg)}')"></div>
                         <div class="focus-side-overlay"></div>
                     </div>
                 `;
@@ -1146,13 +1161,13 @@
                     </div>
                     <div class="project-detail-scroll" id="projectScroll">
                         ${project.images.map((img, i) => `
-                            <div class="project-detail-scroll-item ${i === 0 ? 'active' : ''}" data-src="${img}">
-                                <img src="${img}" alt="${project.title}">
+                            <div class="project-detail-scroll-item ${i === 0 ? 'active' : ''}" data-src="${assetUrl(img)}">
+                                <img src="${assetUrl(img)}" alt="${project.title}">
                             </div>
                         `).join('')}
                     </div>
                     <div class="project-detail-preview">
-                        <img src="${project.images[0]}" id="previewImage" alt="${project.title}">
+                        <img src="${assetUrl(project.images[0])}" id="previewImage" alt="${project.title}">
                     </div>
                 `;
                 setupProjectScroll();
@@ -1172,9 +1187,9 @@
             const rightBg = document.getElementById('focusRightBg');
             function setCenter(idx) {
                 const i = parseInt(idx, 10);
-                previewImage.src = imgs[i];
-                if (leftBg) leftBg.style.backgroundImage = `url('${imgs[i - 1] || imgs[imgs.length - 1]}')`;
-                if (rightBg) rightBg.style.backgroundImage = `url('${imgs[i + 1] || imgs[0]}')`;
+                previewImage.src = assetUrl(imgs[i]);
+                if (leftBg) leftBg.style.backgroundImage = `url('${assetUrl(imgs[i - 1] || imgs[imgs.length - 1])}')`;
+                if (rightBg) rightBg.style.backgroundImage = `url('${assetUrl(imgs[i + 1] || imgs[0])}')`;
             }
             thumbs.forEach(thumb => {
                 thumb.addEventListener('click', () => {
@@ -1257,6 +1272,8 @@
         // Initial render
         renderScrollView();
         document.getElementById('projectListSidebar').classList.add('show');
+        var aboutImg = document.getElementById('aboutHeadshot');
+        if (aboutImg) aboutImg.src = assetUrl(aboutImg.getAttribute('src') || 'images/alexa_headshot-9.JPG');
     </script>
 </body>
 </html>
