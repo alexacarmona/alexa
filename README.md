@@ -121,12 +121,26 @@ portfolio-site/
 - **Browser Support**: Works on all modern browsers (Chrome, Firefox, Safari, Edge)
 - **Mobile**: Fully responsive design
 
+## Previewing locally (so images load)
+
+Opening `index.html` directly in the browser (file://) can block images for security. To preview with images:
+
+1. Open a terminal in the **portfolio-site** folder (same folder as `index.html`).
+2. Run a local server, for example:
+   - **Python 3:** `python3 -m http.server 8000`
+   - **Python 2:** `python -m SimpleHTTPServer 8000`
+   - Or use the "Live Server" extension in VS Code/Cursor and open the portfolio-site folder.
+3. In the browser go to: `http://localhost:8000` (or the port shown).
+
+Images must live in an `images/` folder **in the same folder as index.html**.
+
 ## Troubleshooting
 
 **Images not loading?**
-- Check that all image filenames match exactly (case-sensitive)
-- Ensure images are in the `images/` folder
-- Verify image paths in the `projects` array
+- **Preview via a local server** (see "Previewing locally" above). Don’t open the HTML file directly (file://).
+- Check that all image filenames match exactly (case-sensitive) with the paths in the `projects` array.
+- Ensure images are in the `images/` folder next to `index.html`.
+- Verify image paths in the `projects` array (e.g. `images/YourFile.jpg`).
 
 **Site not deploying?**
 - Wait 1-2 minutes after enabling GitHub Pages
