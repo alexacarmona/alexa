@@ -737,6 +737,21 @@
             var b = (typeof window !== 'undefined' && window.BASE_PATH) ? window.BASE_PATH : '';
             return location.origin + b + (path.charAt(0) === '/' ? path.slice(1) : path);
         }
+        var placeholderImg = 'data:image/gif;base64,R0lGOODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        function onImgError(img) {
+            img.onerror = null;
+            img.style.background = '#f0f0f0';
+            img.style.minHeight = '100%';
+            img.alt = '';
+            img.src = placeholderImg;
+        }
+        function addImageFallback(root) {
+            (root || document).querySelectorAll('img').forEach(function(img) {
+                if (img.dataset.fallbackDone) return;
+                img.dataset.fallbackDone = '1';
+                img.onerror = function() { onImgError(img); };
+            });
+        }
         const projects = [
             {
                 id: 1,
@@ -1042,6 +1057,7 @@
             });
             
             setupScrollSpy();
+            addImageFallback(container);
         }
 
         function filterPhotography() {
@@ -1084,6 +1100,7 @@
                 });
                 wrap.appendChild(grid);
             }
+            addImageFallback(wrap);
             requestAnimationFrame(() => {
                 const view = document.getElementById('photographyView');
                 view.scrollLeft = (wrap.scrollWidth - view.clientWidth) / 2;
@@ -1174,6 +1191,7 @@
             }
 
             detail.classList.add('active');
+            addImageFallback(container);
             document.getElementById('worksLabel').style.display = 'none';
             document.getElementById('projectListSidebar').classList.remove('show');
             document.body.style.overflow = 'auto';
@@ -1274,6 +1292,7 @@
         document.getElementById('projectListSidebar').classList.add('show');
         var aboutImg = document.getElementById('aboutHeadshot');
         if (aboutImg) aboutImg.src = assetUrl(aboutImg.getAttribute('src') || 'images/alexa_headshot-9.JPG');
+        addImageFallback();
     </script>
 </body>
 </html>
