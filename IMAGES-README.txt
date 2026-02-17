@@ -1,6 +1,12 @@
 IMAGES FOR YOUR SITE
 ====================
 
+HOW TO OPEN THE SITE (so you don't see "Index of" file list):
+  - You must open the FILE "index.html", not the folder.
+  - On your Mac: go to the portfolio-site folder, then double-click "index.html". It will open in your browser and you'll see the real site (alexa, photography, about).
+  - If you open the folder itself in the browser, you'll only see a list of files (images, index.html, etc.). That's not the site.
+  - Best for testing: run a small server (see README) and open http://localhost:8000 so images load properly.
+
 What "repo" means (simple):
   Your "repo" = the project on GitHub. It's the folder that holds your website (index.html + images folder). When you open github.com and click your project "portfolio-site", that page is your repo. The "root" = the top level of that folder (where index.html and the images folder should sit).
 
