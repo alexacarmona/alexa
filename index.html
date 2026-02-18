@@ -698,7 +698,7 @@
         <div class="about-section" id="aboutSection">
             <div class="about-content">
                 <div class="about-image">
-                    <img id="aboutHeadshot" src="images/alexa_headshot-9.JPG" alt="alexa carmona">
+                    <img id="aboutHeadshot" src="/images/alexa_headshot-9.JPG" alt="alexa carmona">
                 </div>
                 <div class="about-text">
                     <h2>about</h2>
@@ -734,8 +734,10 @@
         function assetUrl(path) {
             if (!path) return '';
             if (path.indexOf('http') === 0 || path.indexOf('//') === 0) return path;
+            var p = (path.charAt(0) === '/' ? path.slice(1) : path);
             var b = (typeof window !== 'undefined' && window.BASE_PATH) ? window.BASE_PATH : '';
-            return location.origin + b + (path.charAt(0) === '/' ? path.slice(1) : path);
+            if (!b) b = '/';
+            return location.origin + b + p;
         }
         var placeholderImg = 'data:image/gif;base64,R0lGOODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
         function onImgError(img) {
