@@ -70,7 +70,7 @@
         /* Project List Sidebar */
         .project-list-sidebar {
             position: fixed;
-            right: 40px;
+            right: 20px;
             bottom: 40px;
             z-index: 50;
             display: none;
@@ -98,7 +98,7 @@
 
         /* Scroll View */
         .scroll-view {
-            padding: 100px 40px 80px;
+            padding: 100px 40px 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -115,10 +115,20 @@
         }
 
         .scroll-item {
-            margin-bottom: 60px;
+            margin-bottom: -100px;
             cursor: pointer;
             max-width: 220px;
             width: 100%;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease, z-index 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .scroll-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            z-index: 10;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
         .scroll-item img {
