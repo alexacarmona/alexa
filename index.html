@@ -115,7 +115,7 @@
         .scroll-item {
             margin-bottom: 60px;
             cursor: pointer;
-            max-width: 1200px;
+            max-width: 500px;
             width: 100%;
         }
 
@@ -271,7 +271,6 @@
         .project-detail-preview img {
             width: 100%;
             height: auto;
-            max-width: 1200px;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: high-quality;
         }
@@ -1109,7 +1108,12 @@
                     const cell = document.createElement('div');
                     cell.className = 'photography-grid-cell';
                     cell.onclick = () => openProject(project.id, true);
-                    cell.innerHTML = `<img src="${assetUrl(project.thumbnail)}" alt="${project.title}">`;
+                    // For breadly in photography section, use packaging image thumbnail
+                    let thumb = project.thumbnail;
+                    if (project.id === 1 && project.title.toLowerCase() === 'breadly') {
+                        thumb = 'images/alexa_breadly1-44.jpg';
+                    }
+                    cell.innerHTML = `<img src="${assetUrl(thumb)}" alt="${project.title}">`;
                     grid.appendChild(cell);
                 });
                 wrap.appendChild(grid);
