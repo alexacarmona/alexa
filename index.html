@@ -990,7 +990,6 @@
             { id: 102, title: "atl bikes 10", year: "2024", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/alexa-atlBikes-10-f048738e-24c4-4c31-9454-b0eb89a4b8bf.png", images: ["images/alexa-atlBikes-10-f048738e-24c4-4c31-9454-b0eb89a4b8bf.png"] },
             { id: 103, title: "atl bikes 18", year: "2024", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/alexa-atlBikes-18.png", images: ["images/alexa-atlBikes-18.png"] },
             { id: 104, title: "studio 35", year: "2025", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/Alexa_s1_photography-35.png", images: ["images/Alexa_s1_photography-35.png"] },
-            { id: 105, title: "angelina 18", year: "2024", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/angelina_digitals-18.png", images: ["images/angelina_digitals-18.png"] },
             { id: 106, title: "angelina 42", year: "2024", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/angelina_digitals-42-10e92178-4086-4481-b769-737c78f9c785.png", images: ["images/angelina_digitals-42-10e92178-4086-4481-b769-737c78f9c785.png"] },
             { id: 107, title: "lacoste", year: "2025", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/new_lacoste_alexa.png", images: ["images/new_lacoste_alexa.png"] },
             { id: 108, title: "light bg 8", year: "2025", categories: ["photography"], photographyOnly: true, description: "", details: "", thumbnail: "images/alexa_lightBG-8-f3efb706-670b-400d-8f67-7716b5b809ea.png", images: ["images/alexa_lightBG-8-f3efb706-670b-400d-8f67-7716b5b809ea.png"] },
@@ -1150,7 +1149,14 @@
             if (fromPhotography) {
                 detail.classList.add('focus-layout');
                 const location = project.location || '';
-                const imgs = project.images;
+                let imgs = project.images;
+                // For breadly project, filter to only show packaging images (remove girls holding bread)
+                if (project.id === 1 && project.title.toLowerCase() === 'breadly') {
+                    imgs = imgs.filter(img => 
+                        img.includes('alexa_breadly1-44') || 
+                        img.includes('alexa_breadly1-50')
+                    );
+                }
                 const leftBg = imgs[1] || imgs[0];
                 const rightBg = imgs[2] || imgs[1] || imgs[0];
                 container.innerHTML = `
