@@ -1,6 +1,8 @@
 # Alexa Carmona Portfolio
 
-A single-page portfolio website showcasing graphic design and photography work.
+**Live site:** [alexacarmonaportfolio.com](https://alexacarmonaportfolio.com)
+
+A single-page portfolio website showcasing graphic design and photography work. Built with HTML/CSS/JS, deployed on GitHub Pages from the repo root. All images live in the `images/` folder.
 
 ## Features
 
