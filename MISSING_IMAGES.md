@@ -1,14 +1,16 @@
 # Missing images (grey placeholders)
 
-These project entries reference image files that are **not** in your `images/` folder. Until you add them, those tiles will show as grey placeholders.
+These project entries reference image files that are **not** in your `images/` folder. Add the files with the **exact** names below so those tiles show the image instead of a grey placeholder.
 
-| Project | Referenced file |
-|--------|------------------|
-| angelina 18 | `images/angelina_digitals-18.png` |
-| light bg 25 | `images/alexa_lightBG-25.png` |
-| DSC05727 | `images/DSC05727.png` |
-| untitled 9763 | `images/untitled-9763.png` |
+| Project        | Exact filename to add in `images/`   |
+|----------------|--------------------------------------|
+| angelina 18    | `angelina_digitals-18.png`           |
+| light bg 25    | `alexa_lightBG-25.png`               |
+| DSC05727       | `DSC05727.png`                       |
+| untitled 9763  | `untitled-9763.png`                  |
 
-**To fix:** Add these files into the `images/` folder in your repo (same names as in the table), then commit and push. The site will show them once the files exist.
+**Important:** Filenames are case-sensitive and must match exactly (including `.png` vs `.jpg`). If your file has a long suffix (e.g. from export), either rename it to the name above or update the project entry in `index.html` to use the full filename.
 
-All other previously “missing” images were fixed by pointing to the correct filenames (including ones with long suffixes or different extensions).
+---
+
+**Fixed in this round:** “untitled 9893” now points to the existing file `untitled-9893-17758152-20a1-44f6-9657-a82e442c7166.png`.
